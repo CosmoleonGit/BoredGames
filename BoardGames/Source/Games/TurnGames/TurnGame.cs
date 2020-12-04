@@ -22,9 +22,11 @@ namespace BoardGames.Source.Games
         protected virtual string WhiteStr => "white";
         protected virtual string BlackStr => "black";
 
-        public TurnGame(MainScreen _mainScreen, bool white) : base(_mainScreen)
+        public TurnGame(MainScreen _mainScreen, int seed) : base(_mainScreen, seed)
         {
-            playerWhite = white;
+
+            playerWhite = seed % 2 == (Networking.IsServer ? 0 : 1);
+            if (!ColourFirst) playerWhite ^= true;
 
             label = new Label(this)
             {
@@ -42,6 +44,10 @@ namespace BoardGames.Source.Games
         internal bool turn;
         internal bool playerWhite = true;
 
+        protected virtual bool ColourFirst => true;
+
+        //protected enum Colour { WHITE, BLACK}
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -52,56 +58,14 @@ namespace BoardGames.Source.Games
             base.Show(gameTime, spriteBatch);
         }
 
-        protected virtual void ResetGame() { ResetLabel(); }
-
-        public void GameEnd(string message)
-        {
-            if (Networking.IsServer)
-            {
-                var yesNo = new OptionsOverlay(message + Environment.NewLine + Environment.NewLine + "Play again?", new string[] { "Yes", "No" });
-                yesNo.action += (string s) =>
-                {
-                    var msg = Networking.CreateMessage();
-                    msg.Write((byte)MainScreen.Side.GAME_SIDE);
-
-                    if (s == "Yes")
-                    {
-                        msg.Write(true);
-
-                        ResetGame();
-                    } else
-                    {
-                        msg.Write(false);
-                        
-                        mainScreen.gameSide = new GameChoose(mainScreen);
-                    }
-
-                    Networking.SendMessage(msg);
-                };
-                overlay = yesNo;
-            } else
-            {
-                var waiting = new WaitingOverlay(message + Environment.NewLine + Environment.NewLine + "Waiting for host to make a decision...");
-
-                waiting.action += (bool s) =>
-                {
-                    if (s)
-                    {
-                        ResetGame();
-                        //overlay = null;
-                    } else
-                    {
-                        mainScreen.gameSide = new WaitForChoose(mainScreen);
-                    }
-                };
-
-                overlay = waiting;
-            }
-        }
-
         public void SwapTurn()
         {
             turn ^= true;
+            ResetLabel();
+        }
+
+        protected override void ResetGame()
+        {
             ResetLabel();
         }
 

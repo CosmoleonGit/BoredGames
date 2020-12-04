@@ -20,7 +20,7 @@ namespace BoardGames.Source.Games.TurnGames.HasamiShogi
         protected override string WhiteStr => "red";
         protected override string BlackStr => "blue";
 
-        public HasamiShogiGame(MainScreen main, bool white) : base(main, white, 9) { }
+        public HasamiShogiGame(MainScreen main, int seed) : base(main, seed, 9) { }
 
         protected override void ResetGame()
         {

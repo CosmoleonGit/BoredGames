@@ -37,7 +37,7 @@ namespace BoardGames.Source.Games.TurnGames
 
         readonly int d;
 
-        public PieceBoard(MainScreen mainScreen, bool white, int _d) : base(mainScreen, white)
+        public PieceBoard(MainScreen mainScreen, int seed, int _d) : base(mainScreen, seed)
         {
             d = _d;
             scl = wh / d;

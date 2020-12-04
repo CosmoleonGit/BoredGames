@@ -125,16 +125,14 @@ namespace BoardGames.Source.Games.TurnGames.Chess
                     base.BeforeMove(board, x1, y1, x2, y2);
                 } else
                 {
-                    //board.SendMessage(x1 + "," + y1 + "," + x2 + "," + y2 + "," + turnInto);
-                    var msg = CreateGameMessage();
-
-                    msg.Write(x1);
-                    msg.Write(y1);
-                    msg.Write(x2);
-                    msg.Write(y2);
-                    msg.Write(turnInto);
-
-                    Networking.SendMessage(msg);
+                    SendGameMessage(msg =>
+                    {
+                        msg.Write(x1);
+                        msg.Write(y1);
+                        msg.Write(x2);
+                        msg.Write(y2);
+                        msg.Write(turnInto);
+                    });
                 }
                 
             }

@@ -11,6 +11,6 @@ namespace BoardGames.Source.Games.TurnGames.Shogi
 {
     public class ShogiGame : PieceBoard
     {
-        public ShogiGame(MainScreen main, bool white) : base(main, white, 9) { }
+        public ShogiGame(MainScreen main, int seed) : base(main, seed, 9) { }
     }
 }

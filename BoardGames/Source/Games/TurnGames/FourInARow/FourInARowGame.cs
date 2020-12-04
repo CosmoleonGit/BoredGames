@@ -1,6 +1,6 @@
 ﻿using BoardGames.Source.Animations;
 using BoardGames.Source.FunScreen;
-using BoardGames.Source.Games.TurnGames.ConnectFour;
+using BoardGames.Source.Games.TurnGames.FourInARow;
 using Lidgren.Network;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -14,9 +14,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGames.Source.Games.TurnGames.ConnectFour
+namespace BoardGames.Source.Games.TurnGames.FourInARow
 {
-    public class ConnectFourGame : TurnGame
+    public class FourInARowGame : TurnGame
     {
         static Texture2D box, redArrow, yellowArrow;
 
@@ -25,7 +25,7 @@ namespace BoardGames.Source.Games.TurnGames.ConnectFour
         protected override string WhiteStr => "red";
         protected override string BlackStr => "yellow";
 
-        static ConnectFourGame()
+        static FourInARowGame()
         {
             box = Main.main.Content.Load<Texture2D>("ConnectFour/Box");
 
@@ -50,7 +50,7 @@ namespace BoardGames.Source.Games.TurnGames.ConnectFour
 
         readonly AnimManager animations;
 
-        public ConnectFourGame(MainScreen screen, bool white) : base(screen, white)
+        public FourInARowGame(MainScreen screen, int seed) : base(screen, seed)
         {
             animations = new AnimManager();
             //pieces = new CFourPiece[w, h];
@@ -128,9 +128,7 @@ namespace BoardGames.Source.Games.TurnGames.ConnectFour
 
                     Drop(place, playerWhite);
 
-                    var msg = CreateGameMessage();
-                    msg.Write(place);
-                    Networking.SendMessage(msg);
+                    SendGameMessage(msg => msg.Write(place));
                 }
             }
         }

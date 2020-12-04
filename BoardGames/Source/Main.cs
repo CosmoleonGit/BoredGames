@@ -1,6 +1,7 @@
 ﻿using BoardGames.Source;
 using BoardGames.Source.FunScreen;
 using BoardGames.Source.Games;
+using BoardGames.Source.Games.BlockFall;
 using BoardGames.Source.Games.TurnGames;
 using BoardGames.Source.Games.TurnGames.Chess;
 using BoardGames.Source.Games.TurnGames.Draughts;
@@ -108,8 +109,8 @@ namespace BoardGames
 
 #if DEBUG
             Properties.Settings.Default.username = "Debug";
-            //Screen = new ChooseScreen();
-            Screen = new TRexRunnerGame(new MainScreen());
+            Screen = new ChooseScreen();
+            //Screen = new TetrisGame(new MainScreen());
 #endif
         }
 

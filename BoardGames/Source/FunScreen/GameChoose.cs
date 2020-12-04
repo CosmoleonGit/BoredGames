@@ -18,7 +18,7 @@ namespace BoardGames.Source.FunScreen
 {
     internal class GameChoose : ControlGroup
     {
-        static readonly string[] options = { "Chess", "Draughts", "Hasami Shogi", "Connect Four", "Dots and Boxes", "T-Rex Runner"};
+        static readonly string[] options = { "Chess", "Draughts", "Hasami Shogi", "Four In A Row", "Dots and Boxes", "T-Rex Runner", "Block Fall"};
 
         readonly MainScreen mainScreen;
         public GameChoose(MainScreen _mainScreen)
@@ -57,15 +57,17 @@ namespace BoardGames.Source.FunScreen
         {
             string value = (s as Button).Text;
 
-            bool white = Main.random.NextDouble() < 0.5;
+            int seed = Main.random.Next(int.MaxValue);
             //Console.WriteLine(white);
 
             var msg = Networking.CreateMessage();
             msg.Write((byte)MainScreen.Side.GAME_SIDE);
-            msg.Write(value + "," + (white ? "B" : "W"));
+            msg.Write(value);
+            //msg.Write(value + "," + (white ? "B" : "W"));
+            msg.Write(seed);
             Networking.SendMessage(msg);
 
-            mainScreen.LoadFromString(value, white);
+            mainScreen.LoadFromString(value, seed);
         }
     }
 }

@@ -35,6 +35,7 @@ namespace BoardGames.Source.FunScreen
 
         public void ReceiveMessage(NetIncomingMessage msg)
         {
+            /*
             string[] parts = msg.ReadString().Split(',');
 
             if (parts.Length != 2) return;
@@ -42,6 +43,12 @@ namespace BoardGames.Source.FunScreen
             bool white = parts[1] == "W";
 
             mainScreen.LoadFromString(parts[0], white);
+            */
+
+            string n = msg.ReadString();
+            int seed = msg.ReadInt32();
+
+            mainScreen.LoadFromString(n, seed);
         }
     }
 }

@@ -60,6 +60,7 @@ namespace BoardGames.Source.Games.TurnGames
             {
                 //board.SendMessage(x1 + "," + y1 + "," + x2 + "," + y2);
 
+                /*
                 var msg = CreateGameMessage();
 
                 msg.Write(x1);
@@ -68,6 +69,15 @@ namespace BoardGames.Source.Games.TurnGames
                 msg.Write(y2);
 
                 Networking.SendMessage(msg);
+                */
+
+                SendGameMessage(msg =>
+                {
+                    msg.Write(x1);
+                    msg.Write(y1);
+                    msg.Write(x2);
+                    msg.Write(y2);
+                });
             }
 
             protected virtual bool CancelMove(PieceBoard board, int x1, int y1, int x2, int y2, Action action = null) { return false; }

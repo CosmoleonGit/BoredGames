@@ -32,16 +32,13 @@ namespace BoardGames.Source.Games.TRexRunner
 
         const float jumpHeight = 8f;
 
-        protected override Texture2D GetTexture()
-        {
-            return tex;
-        }
+        public override Texture2D GetTexture => tex;
 
         bool grounded;
 
         public override void Update(GameTime gameTime)
         {
-            if (grounded && Input.KeyPressed(Keys.Space) || Input.KeyPressed(Keys.W) || Input.KeyPressed(Keys.Up))
+            if (grounded && (Input.KeyPressed(Keys.Space) || Input.KeyPressed(Keys.W) || Input.KeyPressed(Keys.Up)))
             {
                 yVelocity = -jumpHeight;
             }

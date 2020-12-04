@@ -1,5 +1,5 @@
 ﻿using BoardGames.Source.Games;
-using BoardGames.Source.Games.TurnGames.ConnectFour;
+using BoardGames.Source.Games.TurnGames.FourInARow;
 using BoardGames.Source.Games.TurnGames.Chess;
 using BoardGames.Source.Games.TurnGames.Draughts;
 using BoardGames.Source.Games.TurnGames.HasamiShogi;
@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoardGames.Source.Games.TurnGames.DotsAndBoxes;
+using BoardGames.Source.Games.BlockFall;
 
 namespace BoardGames.Source.FunScreen
 {
@@ -75,30 +76,35 @@ namespace BoardGames.Source.FunScreen
             }
         }
 
-        internal void LoadFromString(string s, bool white)
+        internal void LoadFromString(string s, int seed)
         {
+            bool white = seed % 2 == (Networking.IsServer ? 0 : 1);
+
             switch (s)
             {
                 case "Chess":
-                    gameSide = new ChessGame(this, white);
+                    gameSide = new ChessGame(this, seed);
                     break;
                 case "Draughts":
-                    gameSide = new DraughtsGame(this, white);
+                    gameSide = new DraughtsGame(this, seed);
                     break;
                 case "Shogi":
-                    gameSide = new ShogiGame(this, white);
+                    gameSide = new ShogiGame(this, seed);
                     break;
                 case "Hasami Shogi":
-                    gameSide = new HasamiShogiGame(this, white);
+                    gameSide = new HasamiShogiGame(this, seed);
                     break;
-                case "Connect Four":
-                    gameSide = new ConnectFourGame(this, white);
+                case "Four In A Row":
+                    gameSide = new FourInARowGame(this, seed);
                     break;
                 case "Dots and Boxes":
-                    gameSide = new DotsAndBoxesGame(this, white);
+                    gameSide = new DotsAndBoxesGame(this, seed);
                     break;
                 case "T-Rex Runner":
-                    gameSide = new TRexRunnerGame(this);
+                    gameSide = new TRexRunnerGame(this, seed);
+                    break;
+                case "Block Fall":
+                    gameSide = new BlockFallGame(this, seed);
                     break;
             }
         }

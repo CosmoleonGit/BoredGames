@@ -8,7 +8,7 @@ namespace BoardGames.Source.Games.TurnGames.Draughts
 {
     public partial class DraughtsGame : PieceBoard
     {
-        public DraughtsGame(MainScreen main, bool white) : base(main, !white, 8) { }
+        public DraughtsGame(MainScreen main, int seed) : base(main, seed, 8) { }
 
         static DraughtsGame()
         {
@@ -47,6 +47,8 @@ namespace BoardGames.Source.Games.TurnGames.Draughts
         const int flipFrames = 5;
 
         Point capturingPiece;
+
+        protected override bool ColourFirst => false;
 
         protected override void ResetGame()
         {

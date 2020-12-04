@@ -72,12 +72,15 @@
     <Compile Include="Source\Animations\MoveAnim.cs" />
     <Compile Include="Source\Animations\SpriteAnim.cs" />
     <Compile Include="Source\Animations\ZoomAnim.cs" />
+    <Compile Include="Source\Games\BlockFall\BlockFallGame.cs" />
+    <Compile Include="Source\Games\BlockFall\BlockFallInstance.cs" />
+    <Compile Include="Source\Games\BlockFall\BlockTypes.cs" />
     <Compile Include="Source\Games\TRexRunner\GameObject.cs" />
     <Compile Include="Source\Games\TRexRunner\NetPlayer.cs" />
     <Compile Include="Source\Games\TRexRunner\Player.cs" />
     <Compile Include="Source\Games\TRexRunner\TRexRunnerGame.cs" />
-    <Compile Include="Source\Games\TurnGames\ConnectFour\Counter.cs" />
-    <Compile Include="Source\Games\TurnGames\ConnectFour\ConnectFourGame.cs" />
+    <Compile Include="Source\Games\TurnGames\FourInARow\Counter.cs" />
+    <Compile Include="Source\Games\TurnGames\FourInARow\FourInARowGame.cs" />
     <Compile Include="Source\Games\TurnGames\DotsAndBoxes\DotsAndBoxesGame.cs" />
     <Compile Include="Source\Games\TurnGames\HasamiShogi\HasamiShogiGame.cs" />
     <Compile Include="Source\Games\TurnGames\HasamiShogi\HSPiece.cs" />

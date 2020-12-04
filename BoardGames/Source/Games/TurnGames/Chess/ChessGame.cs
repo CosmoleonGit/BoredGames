@@ -14,7 +14,7 @@ namespace BoardGames.Source.Games.TurnGames.Chess
 {
     public partial class ChessGame : PieceBoard
     {
-        public ChessGame(MainScreen main, bool white) : base(main, white, 8) { }
+        public ChessGame(MainScreen main, int seed) : base(main, seed, 8) { }
 
         static SoundEffect warning;
 

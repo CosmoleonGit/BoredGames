@@ -19,10 +19,12 @@ namespace BoardGames.Source.Games
         internal OverlayScreen overlay;
 
         protected MainScreen mainScreen;
+        protected int seed;
 
-        public BoredGame(MainScreen _mainScreen)
+        public BoredGame(MainScreen _mainScreen, int _seed)
         {
             mainScreen = _mainScreen;
+            seed = _seed;
 
             Button resignBtn = new Button(this)
             {
@@ -84,6 +86,20 @@ namespace BoardGames.Source.Games
             msg.Write((byte)MessageType.GAME);
 
             return msg;
+        }
+
+        public static void SendGameMessage(Action<NetOutgoingMessage> func, 
+                                           NetDeliveryMethod method = NetDeliveryMethod.ReliableOrdered, 
+                                           int channel = 0)
+        {
+            var msg = Networking.CreateMessage();
+
+            msg.Write((byte)MainScreen.Side.GAME_SIDE);
+            msg.Write((byte)MessageType.GAME);
+
+            func(msg);
+
+            Networking.SendMessage(msg, method, channel);
         }
 
         public void ReceiveMessage(NetIncomingMessage msg)
@@ -164,5 +180,52 @@ namespace BoardGames.Source.Games
             else { base.Show(gameTime, spriteBatch); }
             //base.Show(gameTime, spriteBatch);
         }
+
+        public void GameEnd(string message)
+        {
+            if (Networking.IsServer)
+            {
+                var yesNo = new OptionsOverlay(message + Environment.NewLine + Environment.NewLine + "Play again?", new string[] { "Yes", "No" });
+                yesNo.action += (string s) =>
+                {
+                    var msg = Networking.CreateMessage();
+                    msg.Write((byte)MainScreen.Side.GAME_SIDE);
+
+                    if (s == "Yes")
+                    {
+                        msg.Write(true);
+
+                        ResetGame();
+                    } else
+                    {
+                        msg.Write(false);
+                        
+                        mainScreen.gameSide = new GameChoose(mainScreen);
+                    }
+
+                    Networking.SendMessage(msg);
+                };
+                overlay = yesNo;
+            } else
+            {
+                var waiting = new WaitingOverlay(message + Environment.NewLine + Environment.NewLine + "Waiting for host to make a decision...");
+
+                waiting.action += (bool s) =>
+                {
+                    if (s)
+                    {
+                        ResetGame();
+                        //overlay = null;
+                    } else
+                    {
+                        mainScreen.gameSide = new WaitForChoose(mainScreen);
+                    }
+                };
+
+                overlay = waiting;
+            }
+        }
+
+        protected virtual void ResetGame() { }
     }
 }

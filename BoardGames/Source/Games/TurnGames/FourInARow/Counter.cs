@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardGames.Source.Games.TurnGames.ConnectFour
+namespace BoardGames.Source.Games.TurnGames.FourInARow
 {
     internal class Counter : Piece
     {

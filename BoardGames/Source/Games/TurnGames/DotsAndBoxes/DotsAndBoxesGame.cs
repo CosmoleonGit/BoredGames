@@ -71,7 +71,7 @@ namespace BoardGames.Source.Games.TurnGames.DotsAndBoxes
             scribble = Main.main.Content.Load<Texture2D>("DotsAndBoxes/Scribble");
         }
 
-        public DotsAndBoxesGame(MainScreen screen, bool white) : base(screen, white)
+        public DotsAndBoxesGame(MainScreen screen, int seed) : base(screen, seed)
         {
             animations = new AnimManager();
             //pieces = new CFourPiece[w, h];
@@ -91,12 +91,12 @@ namespace BoardGames.Source.Games.TurnGames.DotsAndBoxes
                 var p = Input.MousePositionMatrix(boardMatrix);
                 MoveMouse(p.X, p.Y);
 
-                var msg = CreateGameMessage();
-                msg.Write((byte)IncomingType.MOVE);
-                msg.Write(mousePos.X);
-                msg.Write(mousePos.Y);
-                Networking.SendMessage(msg, NetDeliveryMethod.ReliableSequenced, 1);
-
+                SendGameMessage(msg =>
+                {
+                    msg.Write((byte)IncomingType.MOVE);
+                    msg.Write(mousePos.X);
+                    msg.Write(mousePos.Y);
+                }, NetDeliveryMethod.ReliableSequenced, 1);
                 
                 if (Input.LeftMousePressed() && mousePos.X >= 0 && mousePos.X < w && mousePos.Y >= 0 && mousePos.Y < h)
                 {
