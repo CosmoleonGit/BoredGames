@@ -14,3 +14,5 @@ The list of games currently includes:
 •	Connect Four
 
 •	Dots and Boxes
+
+•	Tetris
